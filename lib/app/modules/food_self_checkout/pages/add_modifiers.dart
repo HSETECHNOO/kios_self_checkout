@@ -2,6 +2,8 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:food_self_checkout/app/constants/constants_colors.dart';
 import 'package:food_self_checkout/app/modules/food_self_checkout/controllers/food_self_checkout_controller.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/modifiers_group_model.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/modifiers_model.dart';
 import 'package:get/get.dart';
 
 class AddModifiersScreen extends StatelessWidget {
@@ -330,12 +332,49 @@ class AddModifiersScreen extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: Container(
-                        height: 130,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: Colors.grey.shade400),
-                            color: Colors.grey.shade200),
-                      ),
+                          height: 130,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.grey.shade400),
+                              color: Colors.grey.shade200),
+                          child: Padding(
+                            padding: const EdgeInsets.all(20.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Options Total:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 22)),
+                                    Text(
+                                        '\$${controller.selectedprodcut!.calculateModifiersAmount().toStringAsFixed(2)}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 22)),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Sub Total:',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 22)),
+                                    Text(
+                                        '\$${controller.selectedprodcut!.calculateTotalAmount().toStringAsFixed(2)}',
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 22)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )),
                     ),
                     const SizedBox(height: 20),
                     Padding(
@@ -357,14 +396,30 @@ class AddModifiersScreen extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            if (controller
+                                                    .selectedprodcut!.qty! >
+                                                1) {
+                                              controller.selectedprodcut!.qty =
+                                                  controller.selectedprodcut!
+                                                          .qty! -
+                                                      1;
+                                            }
+                                            controller.refreshUpdate();
+                                          },
                                           icon: const Icon(Icons.remove)),
                                       Text(
                                           controller.selectedprodcut!.qty
                                               .toString(),
                                           style: const TextStyle(fontSize: 22)),
                                       IconButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            controller.selectedprodcut!.qty =
+                                                controller
+                                                        .selectedprodcut!.qty! +
+                                                    1;
+                                            controller.refreshUpdate();
+                                          },
                                           icon: const Icon(Icons.add)),
                                     ],
                                   ),
@@ -373,18 +428,28 @@ class AddModifiersScreen extends StatelessWidget {
                           const SizedBox(width: 20),
                           Expanded(
                               flex: 6,
-                              child: Container(
-                                height: 55,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(20),
-                                    color: AppColors.primaryColor),
-                                child: const Center(
-                                  child: Text(
-                                    'Add to Cart',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 22),
+                              child: InkWell(
+                                onTap: () {
+                                  controller.cartList
+                                      .add(controller.selectedprodcut!);
+                                  controller.selectedprodcut = null;
+                                  controller.productsList = products;
+                                  controller.showsModifiersScreen = false;
+                                  controller.refreshUpdate();
+                                },
+                                child: Container(
+                                  height: 55,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: AppColors.primaryColor),
+                                  child: const Center(
+                                    child: Text(
+                                      'Add to Cart',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 22),
+                                    ),
                                   ),
                                 ),
                               ))

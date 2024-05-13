@@ -1,8 +1,12 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, recursive_getters
 
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/modifiersType.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/modifiers_group_model.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/modifiers_model.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/product_model.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/sizegroup_model.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/sizes_moel.dart';
 import 'package:get/get.dart';
 
 class FoodSelfCheckoutController extends GetxController {
@@ -10,6 +14,7 @@ class FoodSelfCheckoutController extends GetxController {
   Product? selectedprodcut;
 
   setShowsModifiersScreen(Product product) {
+    selectedprodcut = null;
     if (product.modifiersTypes == null) {
       addItemtoCartlist(product);
     } else {
@@ -105,72 +110,6 @@ class FoodSelfCheckoutController extends GetxController {
     FoodCategory(id: 19, parentId: 18, name: 'Eggs'),
     FoodCategory(id: 20, parentId: 18, name: 'Pancakes'),
   ];
-
-  final List<Product> products = [
-    Product(
-        id: 1,
-        name: 'Cheeseburger',
-        price: 5.99,
-        categoryId: 1,
-        modifiersTypes: ModifiersTypes(
-          modifiersGroups: [
-            ModifiersGroup(
-              name: 'Chrust Type',
-              isSelect: true,
-              modifiers: [
-                Modifiers(name: 'Thin Crust', isSelected: true),
-                Modifiers(name: 'Deep Dish', price: 3.0),
-                Modifiers(name: 'FlatBread', price: 2.0),
-                Modifiers(name: 'Gluten Free', price: 4.0),
-                Modifiers(name: 'Buttery', price: 3.0),
-                Modifiers(name: 'Stuffed', price: 3.0),
-              ],
-            ),
-            ModifiersGroup(
-              name: 'Sauce',
-              modifiers: [
-                Modifiers(name: 'Modifier 1', price: 2.5, qty: 1),
-                Modifiers(name: 'Modifier 2', price: 3.5, qty: 1),
-              ],
-            ),
-            ModifiersGroup(
-              name: 'Cheese',
-              modifiers: [
-                Modifiers(name: 'Modifier 1', price: 2.5, qty: 1),
-                Modifiers(name: 'Modifier 2', price: 3.5, qty: 1),
-              ],
-            ),
-            ModifiersGroup(
-              name: 'Toppings',
-              modifiers: [
-                Modifiers(name: 'Balcon', price: 2.5, qty: 1, image: 'o'),
-                Modifiers(name: 'Sossage', price: 3.5, qty: 1, image: 'o'),
-                Modifiers(name: 'Chicken', price: 2.5, qty: 1, image: 'o'),
-                Modifiers(name: 'Salami', price: 3.5, qty: 1, image: 'o'),
-              ],
-            ),
-          ],
-          sizeGroup: SizeGroup(
-            sizes: [
-              Sizes(size: 8, isSelected: true),
-              Sizes(size: 10, isSelected: false, price: 6.99),
-              Sizes(size: 12, isSelected: false, price: 7.99),
-            ],
-          ),
-        )),
-    Product(id: 2, name: 'Pepperoni Pizza', price: 8.99, categoryId: 2),
-    Product(id: 3, name: 'Caesar Salad', price: 6.49, categoryId: 2),
-    Product(id: 4, name: 'Smoothie Mix', price: 4.99, categoryId: 4),
-    Product(id: 5, name: 'Grilled Chicken Salad', price: 7.99, categoryId: 5),
-    Product(id: 6, name: 'Sweet and Sour Chicken', price: 9.99, categoryId: 6),
-    Product(id: 7, name: 'Sushi Roll', price: 12.99, categoryId: 7),
-    Product(id: 8, name: 'Spaghetti Carbonara', price: 10.99, categoryId: 12),
-    Product(id: 9, name: 'Tiramisu', price: 4.99, categoryId: 12),
-    Product(id: 10, name: 'Chocolate Cake', price: 6.99, categoryId: 15),
-    Product(id: 11, name: 'Vanilla Ice Cream', price: 3.99, categoryId: 15),
-    Product(id: 12, name: 'Egg Benedict', price: 7.49, categoryId: 18),
-    Product(id: 13, name: 'Blueberry Pancakes', price: 5.99, categoryId: 18),
-  ];
 }
 
 class FoodCategory {
@@ -181,74 +120,68 @@ class FoodCategory {
   FoodCategory({required this.id, this.parentId, required this.name});
 }
 
-class Product {
-  final int? id;
-  final String? name;
-  final double? price;
-  int? qty;
-  final int? categoryId;
-  final ModifiersTypes? modifiersTypes;
-
-  Product({
-    this.qty,
-    this.id,
-    this.name,
-    this.modifiersTypes,
-    this.price,
-    this.categoryId,
-  });
-}
-
-class ModifiersTypes {
-  final List<ModifiersGroup>? modifiersGroups;
-  final SizeGroup? sizeGroup;
-  ModifiersTypes({
-    this.modifiersGroups,
-    this.sizeGroup,
-  });
-}
-
-class ModifiersGroup {
-  final bool? isSelect;
-  final String? name;
-  final List<Modifiers>? modifiers;
-  ModifiersGroup({
-    this.isSelect,
-    this.name,
-    this.modifiers,
-  });
-}
-
-class SizeGroup {
-  final groupname = 'Size';
-  final List<Sizes>? sizes;
-  SizeGroup({
-    this.sizes,
-  });
-}
-
-class Sizes {
-  final int? size;
-  bool? isSelected;
-  final double? price;
-  Sizes({
-    this.price,
-    this.size,
-    this.isSelected,
-  });
-}
-
-class Modifiers {
-  final String? name;
-  final double? price;
-  final int? qty;
-  final String? image;
-  bool? isSelected;
-  Modifiers({
-    this.name,
-    this.price,
-    this.image,
-    this.isSelected,
-    this.qty,
-  });
-}
+final List<Product> products = [
+  Product(
+      id: 1,
+      name: 'Cheeseburger',
+      price: 5.99,
+      categoryId: 1,
+      modifiersTypes: ModifiersTypes(
+        modifiersGroups: [
+          ModifiersGroup(
+            name: 'Chrust Type',
+            isSelect: true,
+            modifiers: [
+              Modifiers(name: 'Thin Crust', isSelected: true),
+              Modifiers(name: 'Deep Dish', price: 3.0),
+              Modifiers(name: 'FlatBread', price: 2.0),
+              Modifiers(name: 'Gluten Free', price: 4.0),
+              Modifiers(name: 'Buttery', price: 3.0),
+              Modifiers(name: 'Stuffed', price: 3.0),
+            ],
+          ),
+          ModifiersGroup(
+            name: 'Sauce',
+            modifiers: [
+              Modifiers(name: 'Modifier 1', price: 2.5, qty: 1),
+              Modifiers(name: 'Modifier 2', price: 3.5, qty: 1),
+            ],
+          ),
+          ModifiersGroup(
+            name: 'Cheese',
+            modifiers: [
+              Modifiers(name: 'Modifier 1', price: 2.5, qty: 1),
+              Modifiers(name: 'Modifier 2', price: 3.5, qty: 1),
+            ],
+          ),
+          ModifiersGroup(
+            name: 'Toppings',
+            modifiers: [
+              Modifiers(name: 'Balcon', price: 2.5, qty: 1, image: 'o'),
+              Modifiers(name: 'Sossage', price: 3.5, qty: 1, image: 'o'),
+              Modifiers(name: 'Chicken', price: 2.5, qty: 1, image: 'o'),
+              Modifiers(name: 'Salami', price: 3.5, qty: 1, image: 'o'),
+            ],
+          ),
+        ],
+        sizeGroup: SizeGroup(
+          sizes: [
+            Sizes(size: 8, isSelected: true, price: 5.99),
+            Sizes(size: 10, isSelected: false, price: 6.99),
+            Sizes(size: 12, isSelected: false, price: 7.99),
+          ],
+        ),
+      )),
+  Product(id: 2, name: 'Pepperoni Pizza', price: 8.99, categoryId: 2),
+  Product(id: 3, name: 'Caesar Salad', price: 6.49, categoryId: 2),
+  Product(id: 4, name: 'Smoothie Mix', price: 4.99, categoryId: 4),
+  Product(id: 5, name: 'Grilled Chicken Salad', price: 7.99, categoryId: 5),
+  Product(id: 6, name: 'Sweet and Sour Chicken', price: 9.99, categoryId: 6),
+  Product(id: 7, name: 'Sushi Roll', price: 12.99, categoryId: 7),
+  Product(id: 8, name: 'Spaghetti Carbonara', price: 10.99, categoryId: 12),
+  Product(id: 9, name: 'Tiramisu', price: 4.99, categoryId: 12),
+  Product(id: 10, name: 'Chocolate Cake', price: 6.99, categoryId: 15),
+  Product(id: 11, name: 'Vanilla Ice Cream', price: 3.99, categoryId: 15),
+  Product(id: 12, name: 'Egg Benedict', price: 7.49, categoryId: 18),
+  Product(id: 13, name: 'Blueberry Pancakes', price: 5.99, categoryId: 18),
+];

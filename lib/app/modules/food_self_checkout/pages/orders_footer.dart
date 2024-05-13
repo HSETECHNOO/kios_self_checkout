@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:food_self_checkout/app/constants/constants_colors.dart';
 import 'package:food_self_checkout/app/modules/food_self_checkout/controllers/food_self_checkout_controller.dart';
+import 'package:food_self_checkout/app/modules/food_self_checkout/models/product_model.dart';
 import 'package:get/get.dart';
 
 class OrdersFooter extends StatelessWidget {

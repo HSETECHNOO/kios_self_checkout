@@ -1,6 +1,5 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:food_self_checkout/app/constants/constants_colors.dart';
 import 'package:food_self_checkout/app/modules/food_self_checkout/controllers/food_self_checkout_controller.dart';
 import 'package:get/get.dart';
@@ -71,7 +70,7 @@ class CategoriesSide extends StatelessWidget {
                                       Expanded(
                                           child: ListTile(
                                         subtitle: Text(
-                                          '${controller.products.length} Products',
+                                          '${products.length} Products',
                                           style: TextStyle(
                                             color: isSelected
                                                 ? AppColors.whitecolor
@@ -144,7 +143,7 @@ class CategoriesSide extends StatelessWidget {
                                     Expanded(
                                         child: ListTile(
                                       subtitle: Text(
-                                        '${controller.categories.where((element) => element.parentId == category.id).length} Sub Cat - ${controller.products.where((element) => element.categoryId == category.id).length} Products',
+                                        '${controller.categories.where((element) => element.parentId == category.id).length} Sub Cat - ${products.where((element) => element.categoryId == category.id).length} Products',
                                         style: TextStyle(
                                           color: isSelected
                                               ? AppColors.whitecolor
