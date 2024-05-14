@@ -19,7 +19,7 @@ class AddModifiersScreen extends StatelessWidget {
             child: Row(
               children: [
                 const Text(
-                  'Select Modifiers',
+                  "Select Add's On",
                   style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
                 ),
                 const Spacer(),
@@ -30,7 +30,11 @@ class AddModifiersScreen extends StatelessWidget {
                     onPressed: () {
                       controller.showsModifiersScreen = false;
                       controller.refreshUpdate();
-                    })
+                    }),
+                const Text(
+                  'Back',
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.w600),
+                ),
               ],
             ),
           ),
@@ -41,7 +45,11 @@ class AddModifiersScreen extends StatelessWidget {
                   child: Padding(
                 padding: const EdgeInsets.all(50.0),
                 child: Center(
-                  child: Image.asset('images/burger.png'),
+                  child: Column(
+                    children: [
+                      SizedBox(child: Image.asset('images/burger.png')),
+                    ],
+                  ),
                 ),
               )),
               Expanded(
@@ -106,8 +114,8 @@ class AddModifiersScreen extends StatelessWidget {
                                         controller.refreshUpdate();
                                       },
                                       child: Container(
-                                        height: 70,
-                                        width: 70,
+                                        height: 80,
+                                        width: 80,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(6),
@@ -136,198 +144,22 @@ class AddModifiersScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     Text(
-                      "\$${controller.selectedprodcut!.modifiersTypes!.sizeGroup!.sizes!.firstWhere((element) => element.isSelected == true).price.toString()}",
+                      "Size Price: \$${controller.selectedprodcut!.modifiersTypes!.sizeGroup!.sizes!.firstWhere((element) => element.isSelected == true).price.toString()}",
                       style: const TextStyle(
                           fontSize: 38, fontWeight: FontWeight.bold),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 20, top: 20),
                       child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: controller.selectedprodcut!.modifiersTypes!
-                              .modifiersGroups!.length,
-                          itemBuilder: (context, index) {
-                            ModifiersGroup group = controller.selectedprodcut!
-                                .modifiersTypes!.modifiersGroups![index];
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 30),
-                              child: Stack(
-                                clipBehavior: Clip.none,
-                                children: [
-                                  DottedBorder(
-                                    borderType: BorderType.RRect,
-                                    radius: const Radius.circular(12),
-                                    padding: const EdgeInsets.all(12),
-                                    strokeWidth: 0.5,
-                                    dashPattern: const [6, 4],
-                                    color: Colors.black,
-                                    child: SizedBox(
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top: 10),
-                                        child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: group.modifiers!.length,
-                                            itemBuilder: (context, groupIndex) {
-                                              Modifiers modifiers =
-                                                  group.modifiers![groupIndex];
-                                              return Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 5,
-                                                    bottom: 5,
-                                                    left: 20,
-                                                    right: 20),
-                                                child: Column(
-                                                  children: [
-                                                    Container(
-                                                      height: 50,
-                                                      width: double.infinity,
-                                                      decoration: BoxDecoration(
-                                                          color: Colors
-                                                              .grey.shade200,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      12)),
-                                                      child: Row(children: [
-                                                        const SizedBox(
-                                                            width: 20),
-                                                        group.isSelect != null
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        left:
-                                                                            10),
-                                                                child: Builder(
-                                                                    builder:
-                                                                        (context) {
-                                                                  bool
-                                                                      isSelected =
-                                                                      modifiers
-                                                                              .isSelected ??
-                                                                          false;
-                                                                  return InkWell(
-                                                                    onTap: () {
-                                                                      for (var element
-                                                                          in group
-                                                                              .modifiers!) {
-                                                                        element.isSelected =
-                                                                            false;
-                                                                      }
-                                                                      modifiers
-                                                                              .isSelected =
-                                                                          !modifiers
-                                                                              .isSelected!;
-                                                                      controller
-                                                                          .refreshUpdate();
-                                                                    },
-                                                                    child:
-                                                                        Container(
-                                                                      height:
-                                                                          25,
-                                                                      width: 25,
-                                                                      decoration: BoxDecoration(
-                                                                          color: isSelected ? AppColors.whitecolor : null,
-                                                                          border: Border.all(
-                                                                            color: isSelected
-                                                                                ? AppColors.primaryColor
-                                                                                : Colors.grey,
-                                                                          ),
-                                                                          shape: BoxShape.circle),
-                                                                      child: isSelected
-                                                                          ? Center(
-                                                                              child: Container(
-                                                                                height: 18,
-                                                                                width: 18,
-                                                                                decoration: BoxDecoration(color: AppColors.primaryColor, shape: BoxShape.circle),
-                                                                              ),
-                                                                            )
-                                                                          : Container(),
-                                                                    ),
-                                                                  );
-                                                                }),
-                                                              )
-                                                            : Checkbox(
-                                                                activeColor:
-                                                                    AppColors
-                                                                        .primaryColor,
-                                                                checkColor:
-                                                                    AppColors
-                                                                        .whitecolor,
-                                                                focusColor:
-                                                                    Colors
-                                                                        .amber,
-                                                                value: modifiers
-                                                                        .isSelected ??
-                                                                    false,
-                                                                onChanged:
-                                                                    (val) {
-                                                                  modifiers
-                                                                          .isSelected =
-                                                                      val;
-                                                                  controller
-                                                                      .refreshUpdate();
-                                                                }),
-                                                        const SizedBox(
-                                                            width: 20),
-                                                        modifiers.image != null
-                                                            ? Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                        .only(
-                                                                        top: 10,
-                                                                        right:
-                                                                            10,
-                                                                        bottom:
-                                                                            10),
-                                                                child: Image.asset(
-                                                                    'images/burger.png'),
-                                                              )
-                                                            : Container(),
-                                                        Expanded(
-                                                          child: Text(
-                                                            "${modifiers.name!} ${modifiers.price == null ? '' : '(\$${modifiers.price.toString()})'} ",
-                                                            style: const TextStyle(
-                                                                fontSize: 17,
-                                                                color: Colors
-                                                                    .black87,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w600),
-                                                          ),
-                                                        ),
-                                                      ]),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            }),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: -15,
-                                    left: 20,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                          color: Colors.white),
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20, right: 20),
-                                        child: Text(
-                                          group.name.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 17,
-                                              color: Colors.black87,
-                                              fontWeight: FontWeight.w600),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            );
-                          }),
+                        shrinkWrap: true,
+                        itemCount: controller.selectedprodcut!.modifiersTypes!
+                            .modifiersGroups!.length,
+                        itemBuilder: (context, index) {
+                          ModifiersGroup group = controller.selectedprodcut!
+                              .modifiersTypes!.modifiersGroups![index];
+                          return buildModifiersGroup(group, controller);
+                        },
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 20),
@@ -467,5 +299,251 @@ class AddModifiersScreen extends StatelessWidget {
         ],
       );
     });
+  }
+
+  Widget buildModifiersGroup(
+      ModifiersGroup group, FoodSelfCheckoutController controller) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 30),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          buildDottedBorder(group, controller),
+          buildGroupName(group),
+          if (group.isSelect != null) buildMaxSelectionWarning(),
+        ],
+      ),
+    );
+  }
+
+  Widget buildDottedBorder(
+      ModifiersGroup group, FoodSelfCheckoutController controller) {
+    return DottedBorder(
+      borderType: BorderType.RRect,
+      radius: const Radius.circular(12),
+      padding: const EdgeInsets.all(12),
+      strokeWidth: 0.5,
+      dashPattern: const [6, 4],
+      color: Colors.black,
+      child: SizedBox(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 10),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: group.modifiers!.length,
+            itemBuilder: (context, groupIndex) {
+              Modifiers modifiers = group.modifiers![groupIndex];
+              return buildModifierItem(modifiers, group, controller);
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildModifierItem(Modifiers modifiers, ModifiersGroup group,
+      FoodSelfCheckoutController controller) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+      child: Container(
+        height: 50,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.grey.shade200,
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            buildModifierSelection(modifiers, group, controller),
+            if (modifiers.image != null) buildModifierImage(),
+            Expanded(
+              child: Text(
+                "${modifiers.name!} ${modifiers.price == null ? '' : '(\$${modifiers.price.toString()})'} ",
+                style: const TextStyle(
+                  fontSize: 17,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+            if (group.isSelect == null)
+              modifiers.isSelected != true
+                  ? InkWell(
+                      onTap: () {
+                        modifiers.isSelected = true;
+                        controller.refreshUpdate();
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 150,
+                        decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: const BorderRadius.only(
+                                topRight: Radius.circular(12),
+                                bottomRight: Radius.circular(12))),
+                        child: const Center(
+                          child: Text(
+                            'ADD',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(
+                      height: 45,
+                      width: 150,
+                      decoration: BoxDecoration(
+                          color: AppColors.primaryColor,
+                          borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(12),
+                              bottomRight: Radius.circular(12))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                modifiers.qty = modifiers.qty! - 1;
+                                if (modifiers.qty == 0) {
+                                  modifiers.isSelected = false;
+                                  modifiers.qty = 1;
+                                }
+                                controller.refreshUpdate();
+                              },
+                              icon: const Icon(Icons.remove,
+                                  color: Colors.white)),
+                          Text(modifiers.qty.toString(),
+                              style: const TextStyle(
+                                  fontSize: 22, color: Colors.white)),
+                          IconButton(
+                              onPressed: () {
+                                modifiers.qty = modifiers.qty! + 1;
+                                controller.refreshUpdate();
+                              },
+                              icon: const Icon(Icons.add, color: Colors.white)),
+                        ],
+                      ),
+                    )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildModifierSelection(Modifiers modifiers, ModifiersGroup group,
+      FoodSelfCheckoutController controller) {
+    return group.isSelect != null
+        ? Builder(builder: (context) {
+            bool isSelected = modifiers.isSelected ?? false;
+            return Padding(
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: InkWell(
+                onTap: () {
+                  for (var element in group.modifiers!) {
+                    element.isSelected = false;
+                  }
+                  modifiers.isSelected = !modifiers.isSelected!;
+                  controller.refreshUpdate();
+                },
+                child: Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                    color: isSelected ? AppColors.whitecolor : null,
+                    border: Border.all(
+                      color: modifiers.isSelected != null
+                          ? AppColors.primaryColor
+                          : Colors.grey,
+                    ),
+                    shape: BoxShape.circle,
+                  ),
+                  child: isSelected
+                      ? Center(
+                          child: Container(
+                            height: 18,
+                            width: 18,
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                        )
+                      : Container(),
+                ),
+              ),
+            );
+          })
+        : Padding(
+            padding: const EdgeInsets.only(left: 10, right: 20),
+            child: Checkbox(
+              activeColor: AppColors.primaryColor,
+              checkColor: AppColors.whitecolor,
+              focusColor: Colors.amber,
+              value: modifiers.isSelected ?? false,
+              onChanged: (val) {
+                if (val == false) {
+                  modifiers.qty = 1;
+                }
+                modifiers.isSelected = val;
+
+                controller.refreshUpdate();
+              },
+            ),
+          );
+  }
+
+  Widget buildModifierImage() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, right: 10, bottom: 10),
+      child: Image.asset('images/burger.png'),
+    );
+  }
+
+  Widget buildGroupName(ModifiersGroup group) {
+    return Positioned(
+      top: -15,
+      left: 20,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 20, right: 20),
+          child: Text(
+            group.name.toString(),
+            style: const TextStyle(
+              fontSize: 17,
+              color: Colors.black87,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget buildMaxSelectionWarning() {
+    return Positioned(
+      top: -15,
+      right: 25,
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: const Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Text(
+            '* Maximum Select 1',
+            style: TextStyle(
+              fontSize: 17,
+              color: Colors.red,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

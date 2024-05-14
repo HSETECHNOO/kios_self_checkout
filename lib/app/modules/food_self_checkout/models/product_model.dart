@@ -28,7 +28,11 @@ class Product {
         if (modifiersGroup.modifiers != null) {
           for (var modifier in modifiersGroup.modifiers!) {
             if (modifier.isSelected != null && modifier.isSelected!) {
-              totalAmount += modifier.price ?? 0.0;
+              if (modifier.qty == null) {
+                totalAmount += modifier.price ?? 0.0;
+              } else {
+                totalAmount += (modifier.price ?? 0.0) * modifier.qty!;
+              }
             }
           }
         }
@@ -41,6 +45,8 @@ class Product {
           }
         }
       }
+    } else {
+      totalAmount = price ?? 0.0;
     }
 
     return totalAmount * qty!;
@@ -55,7 +61,11 @@ class Product {
         if (modifiersGroup.modifiers != null) {
           for (var modifier in modifiersGroup.modifiers!) {
             if (modifier.isSelected != null && modifier.isSelected!) {
-              totalAmount += modifier.price ?? 0.0;
+              if (modifier.qty == null) {
+                totalAmount += modifier.price ?? 0.0;
+              } else {
+                totalAmount += (modifier.price ?? 0.0) * modifier.qty!;
+              }
             }
           }
         }

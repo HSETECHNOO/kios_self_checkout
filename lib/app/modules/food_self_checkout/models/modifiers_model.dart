@@ -4,7 +4,7 @@ import 'dart:convert';
 class Modifiers {
   final String? name;
   final double? price;
-  final int? qty;
+  int? qty;
   final String? image;
   bool? isSelected;
   Modifiers({

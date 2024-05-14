@@ -35,27 +35,31 @@ class OrdersFooter extends StatelessWidget {
           color: AppColors.fOODColor,
           image: const DecorationImage(
               image: AssetImage('images/process.png'), fit: BoxFit.fitWidth)),
-      height: height * 0.20,
+      height: height * 0.14,
       width: double.infinity,
       child: Row(
         children: [
           const SizedBox(width: 20),
-          Text('My Order #ORD5673- Dinning Table 8',
-              style: TextStyle(
-                  color: AppColors.whitecolor,
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold)),
+          FittedBox(
+            child: Text('My Order #ORD5673- Dinning Table 8',
+                style: TextStyle(
+                    color: AppColors.whitecolor,
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold)),
+          ),
           const Spacer(),
           Builder(builder: (context) {
             double totalAmount = controller.cartList.fold(
                 0.0,
                 (previousValue, product) =>
                     previousValue + (product.price as double));
-            return Text('\$${totalAmount.toStringAsFixed(2)}',
-                style: TextStyle(
-                    color: AppColors.whitecolor,
-                    fontSize: 32,
-                    fontWeight: FontWeight.bold));
+            return FittedBox(
+              child: Text('\$${totalAmount.toStringAsFixed(2)}',
+                  style: TextStyle(
+                      color: AppColors.whitecolor,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold)),
+            );
           }),
           const SizedBox(width: 20),
         ],
@@ -142,6 +146,7 @@ class OrdersFooter extends StatelessWidget {
                               dashPattern: const [6, 4],
                               color: Colors.black,
                               child: SizedBox(
+                                width: 200,
                                 child: Container(
                                     decoration: BoxDecoration(
                                         color: Colors.white,
@@ -158,20 +163,41 @@ class OrdersFooter extends StatelessWidget {
                                                 fit: BoxFit.fill)),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                            product.name.toString(),
-                                            style: const TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.bold),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                "${product.qty.toString()} X   ${product.name.toString()}",
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontWeight:
+                                                        FontWeight.bold),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                         Text(
-                                          'RS ${product.price.toString()}',
+                                          'RS ${product.calculateTotalAmount().toStringAsFixed(2)}',
                                           style: const TextStyle(
                                               color: Colors.black,
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500),
                                         ),
+                                        if (product.modifiersTypes != null)
+                                          TextButton(
+                                              onPressed: () {
+                                                controller.selectedprodcut =
+                                                    product;
+                                                controller
+                                                    .setShowsViewmodifiersScreen(
+                                                        true);
+                                                controller.refreshUpdate();
+                                              },
+                                              child:
+                                                  const Text("View Add's On"))
+                                        else
+                                          Container(height: 35)
                                       ],
                                     )),
                               ),

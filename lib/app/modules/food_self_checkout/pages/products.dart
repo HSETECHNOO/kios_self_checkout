@@ -88,7 +88,7 @@ class ProductSide extends StatelessWidget {
                   : GridView.builder(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3),
+                              childAspectRatio: 0.8, crossAxisCount: 3),
                       itemCount: controller.productsList.length,
                       shrinkWrap: true,
                       scrollDirection: Axis.vertical,
@@ -98,9 +98,7 @@ class ProductSide extends StatelessWidget {
                           padding: const EdgeInsets.only(
                               left: 10, right: 10, top: 20, bottom: 20),
                           child: InkWell(
-                            onTap: () async {
-                              controller.setShowsModifiersScreen(product);
-                            },
+                            onTap: () async {},
                             child: DottedBorder(
                               borderType: BorderType.RRect,
                               radius: const Radius.circular(12),
@@ -142,20 +140,85 @@ class ProductSide extends StatelessWidget {
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500),
                                         ),
+                                        const SizedBox(height: 10),
                                         controller.cartList
                                                 .where((element) =>
                                                     element.id == product.id)
                                                 .isEmpty
-                                            ? Container()
-                                            : Text(
-                                                '${controller.cartList.where((element) => element.id == product.id).length.toString()} X Added ',
-                                                style: TextStyle(
+                                            ? InkWell(
+                                                onTap: () {
+                                                  controller
+                                                      .setShowsModifiersScreen(
+                                                          product);
+                                                },
+                                                child: Container(
+                                                  height: 45,
+                                                  width: 150,
+                                                  decoration: BoxDecoration(
+                                                      color: AppColors
+                                                          .primaryColor,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12)),
+                                                  child: const Center(
+                                                    child: Text(
+                                                      'ADD',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 18,
+                                                          fontWeight:
+                                                              FontWeight.w600),
+                                                    ),
+                                                  ),
+                                                ),
+                                              )
+                                            : Container(
+                                                height: 45,
+                                                width: 150,
+                                                decoration: BoxDecoration(
                                                     color:
                                                         AppColors.primaryColor,
-                                                    fontSize: 18,
-                                                    fontWeight:
-                                                        FontWeight.w500),
-                                              ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12)),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          controller.removeItem(
+                                                              product);
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.remove,
+                                                            color:
+                                                                Colors.white)),
+                                                    Text(
+                                                        controller.cartList
+                                                            .where((element) =>
+                                                                element.id ==
+                                                                product.id)
+                                                            .first
+                                                            .qty
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            fontSize: 22,
+                                                            color:
+                                                                Colors.white)),
+                                                    IconButton(
+                                                        onPressed: () {
+                                                          controller
+                                                              .addItem(product);
+                                                        },
+                                                        icon: const Icon(
+                                                            Icons.add,
+                                                            color:
+                                                                Colors.white)),
+                                                  ],
+                                                ),
+                                              )
                                       ],
                                     )),
                               ),

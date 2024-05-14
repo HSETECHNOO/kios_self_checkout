@@ -12,6 +12,28 @@ import 'package:get/get.dart';
 class FoodSelfCheckoutController extends GetxController {
   bool showsModifiersScreen = false;
   Product? selectedprodcut;
+  bool showsViewModifiers = false;
+
+  setShowsViewmodifiersScreen(bool val) {
+    showsViewModifiers = val;
+    refreshUpdate();
+  }
+
+  removeItem(Product product) {
+    var exciting = cartList.where((element) => element.id == product.id).first;
+    exciting.qty = exciting.qty! - 1;
+    if (exciting.qty == 0) {
+      cartList.remove(exciting);
+    }
+    update();
+  }
+
+  addItem(Product product) {
+    var exciting = cartList.where((element) => element.id == product.id).first;
+    exciting.qty = exciting.qty! + 1;
+
+    update();
+  }
 
   setShowsModifiersScreen(Product product) {
     selectedprodcut = null;
@@ -125,6 +147,7 @@ final List<Product> products = [
       id: 1,
       name: 'Cheeseburger',
       price: 5.99,
+      qty: 1,
       categoryId: 1,
       modifiersTypes: ModifiersTypes(
         modifiersGroups: [
