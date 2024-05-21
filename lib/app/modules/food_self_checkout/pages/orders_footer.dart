@@ -51,8 +51,8 @@ class OrdersFooter extends StatelessWidget {
           Builder(builder: (context) {
             double totalAmount = controller.cartList.fold(
                 0.0,
-                (previousValue, product) =>
-                    previousValue + (product.price as double));
+                (previousValue, element) =>
+                    (previousValue + element.calculateTotalAmount()));
             return FittedBox(
               child: Text('\$${totalAmount.toStringAsFixed(2)}',
                   style: TextStyle(
@@ -97,9 +97,10 @@ class OrdersFooter extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 color: AppColors.headingTextColor),
             height: height * 0.20,
-            child: const Center(
-              child: Text('Complete Order',
-                  style: TextStyle(
+            child: Center(
+              child: Text(
+                  'Pay ${controller.cartList.fold(0.0, (previousValue, element) => (previousValue + element.calculateTotalAmount())).toStringAsFixed(2)}',
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 32,
                       fontWeight: FontWeight.bold)),
